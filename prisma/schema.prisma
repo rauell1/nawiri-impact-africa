@@ -1,0 +1,224 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "sqlite"
+  url       = env("DATABASE_URL")
+  // ─── FOR SUPABASE (PostgreSQL), change to: ──────────────────
+  // provider  = "postgresql"
+  // url       = env("DATABASE_URL")
+  // directUrl = env("DIRECT_URL")
+}
+
+// ─── SITE SETTINGS (single row) ───
+model SiteSettings {
+  id                  String   @id @default("main")
+  site_name           String   @default("Nawiri Impact Africa")
+  site_tagline        String   @default("Rooted Here. Building Together.")
+  logo_url            String   @default("/images/logo-placeholder.svg")
+  logo_dark_url       String?
+  favicon_url         String   @default("/favicon.ico")
+  primary_color       String   @default("#1B5E20")
+  secondary_color     String   @default("#D4A017")
+  font_heading        String   @default("Playfair Display")
+  font_body           String   @default("Source Serif 4")
+  contact_email       String   @default("kenyajobs@wr.org")
+  contact_phone       String   @default("+254 700 000 000")
+  physical_address    String   @default("Nairobi, Kenya")
+  social_twitter      String?
+  social_linkedin     String?
+  social_facebook     String?
+  social_youtube      String?
+  footer_description  String   @default("")
+  footer_links        String   @default("[]")
+  cookie_banner_text  String   @default("")
+  maintenance_mode    Boolean  @default(false)
+  google_analytics_id String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
+
+// ─── HOME PAGE SETTINGS (single row) ───
+model HomeSettings {
+  id                       String   @id @default("main")
+
+  // Hero fields
+  hero_headline            String   @default("Rooted Here. Building Together.")
+  hero_subheadline         String   @default("A Kenyan organization, governed locally, serving communities across the country.")
+  hero_cta_primary_label   String   @default("See Our Work")
+  hero_cta_primary_url     String   @default("/programmes")
+  hero_cta_secondary_label String   @default("Donate Now")
+  hero_cta_secondary_url   String   @default("/donate")
+  hero_background_image    String   @default("/images/hero-placeholder.jpg")
+  hero_background_video_url String?
+  hero_overlay_opacity     Int      @default(50)
+  hero_text_alignment      String   @default("center")
+
+  // Stats fields
+  stats                    String   @default("[]")
+  stats_bar_bg_color       String   @default("#1B5E20")
+
+  // Featured story
+  featured_story_id        String?
+
+  // Programmes preview
+  home_programmes_heading  String   @default("Our Programmes")
+  home_programmes_subtext  String   @default("")
+  home_featured_programmes String   @default("[]")
+
+  // CTA banner
+  home_cta_heading         String   @default("Join Us in Building a Better Kenya")
+  home_cta_body            String   @default("")
+  home_cta_button_label    String   @default("Get Involved")
+  home_cta_button_url      String   @default("/donate")
+  home_cta_background      String   @default("#D4A017")
+  home_cta_image           String?
+
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+}
+
+// ─── PROGRAMMES ───
+model Programme {
+  id                    String   @id @default(cuid())
+  title                 String
+  slug                  String   @unique
+  short_description     String
+  full_description      String   @default("")
+  cover_image           String   @default("/images/programme-placeholder.jpg")
+  icon                  String   @default("Leaf")
+  color_accent          String?
+  target_beneficiaries  String   @default("")
+  key_activities        String   @default("[]")
+  impact_stat_1_number  String?
+  impact_stat_1_label   String?
+  impact_stat_2_number  String?
+  impact_stat_2_label   String?
+  impact_stat_3_number  String?
+  impact_stat_3_label   String?
+  gallery_images        String   @default("[]")
+  related_stories       String   @default("[]")
+  status                String   @default("draft")
+  sort_order            Int      @default(0)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+}
+
+// ─── STORIES ───
+model Story {
+  id              String   @id @default(cuid())
+  title           String
+  slug            String   @unique
+  excerpt         String
+  author_name     String
+  author_role     String?
+  author_photo    String?
+  cover_image     String   @default("/images/story-placeholder.jpg")
+  body            String   @default("")
+  programme_id    String?
+  location        String?
+  published_date  DateTime @default(now())
+  is_featured     Boolean  @default(false)
+  photo_gallery   String   @default("[]")
+  pull_quote      String?
+  status          String   @default("draft")
+  tags            String   @default("[]")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+// ─── BLOG POSTS ───
+model BlogPost {
+  id              String   @id @default(cuid())
+  title           String
+  slug            String   @unique
+  excerpt         String?
+  body            String   @default("")
+  cover_image     String   @default("/images/blog-placeholder.jpg")
+  category        String   @default("News")
+  author_name     String?
+  published_date  DateTime @default(now())
+  is_featured     Boolean  @default(false)
+  status          String   @default("draft")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+// ─── REPORTS ───
+model Report {
+  id              String   @id @default(cuid())
+  title           String
+  description     String?
+  document_type   String   @default("Annual Report")
+  year            Int
+  file_url        String   @default("")
+  cover_image     String?
+  is_featured     Boolean  @default(false)
+  published_date  DateTime @default(now())
+  status          String   @default("draft")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+// ─── CAREERS ───
+model Career {
+  id                  String   @id @default(cuid())
+  job_title           String
+  slug                String   @unique
+  department          String   @default("Programmes")
+  location            String   @default("Nairobi")
+  employment_type     String   @default("Full-time")
+  description         String   @default("")
+  requirements        String   @default("")
+  how_to_apply        String?
+  application_email   String?
+  application_deadline DateTime @default(now())
+  salary_range        String?
+  is_urgent           Boolean  @default(false)
+  status              String   @default("open")
+  published_date      DateTime @default(now())
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
+
+// ─── TEAM MEMBERS ───
+model TeamMember {
+  id          String   @id @default(cuid())
+  name        String
+  role        String
+  bio         String?
+  photo       String?
+  email       String?
+  linkedin_url String?
+  sort_order  Int      @default(0)
+  is_leadership Boolean @default(false)
+  status      String   @default("draft")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// ─── PARTNERS ───
+model Partner {
+  id           String   @id @default(cuid())
+  name         String
+  logo_url     String   @default("/images/partner-placeholder.svg")
+  website_url  String?
+  description  String?
+  partner_type String   @default("Donor")
+  sort_order   Int      @default(0)
+  is_featured  Boolean  @default(false)
+  status       String   @default("draft")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// ─── CONTACT FORM SUBMISSIONS ───
+model ContactSubmission {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  subject   String
+  message   String
+  createdAt DateTime @default(now())
+}

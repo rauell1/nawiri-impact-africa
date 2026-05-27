@@ -1,0 +1,592 @@
+/*
+ * ╔══════════════════════════════════════════════════════════════╗
+ * ║  NAWIRI IMPACT AFRICA — Design System                      ║
+ * ║  Warm, earthy, locally rooted · Not a generic NGO template  ║
+ * ╚══════════════════════════════════════════════════════════════╝
+ */
+
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ── Tailwind v4 Theme Tokens ─────────────────────────────────── */
+/* These wire CSS custom properties into Tailwind's utility layer */
+@theme inline {
+  /* shadcn/ui colour passthrough (kept for component compat) */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-dm-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-playfair);
+  --font-body: var(--font-source-serif);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   LIGHT MODE  (:root)
+   ═══════════════════════════════════════════════════════════════ */
+:root {
+  /* ── Border Radius ─────────────────────────────────────────── */
+  --radius: 0.5rem;
+
+  /* ── Nawiri Brand Palette ──────────────────────────────────── */
+  --brand-primary:          #1B5E20;   /* Deep Forest Green     */
+  --brand-primary-light:    #2E7D32;   /* Vibrant Green         */
+  --brand-primary-dark:     #0D3B12;   /* Deepest Green         */
+  --brand-primary-50:       #E8F5E9;   /* Green tint for tags   */
+  --brand-secondary:        #D4A017;   /* Warm Gold             */
+  --brand-secondary-light:  #E8C84A;   /* Bright Gold           */
+  --brand-secondary-dark:   #A67C00;   /* Deep Gold             */
+  --brand-secondary-50:     #FFF8E1;   /* Gold tint for tags    */
+  --brand-accent-earth:     #8D6E63;   /* Earth Brown           */
+  --brand-accent-earth-light: #A1887F; /* Light Earth           */
+  --brand-accent-earth-dark: #5D4037;  /* Deep Earth            */
+
+  /* ── Surfaces & Backgrounds ────────────────────────────────── */
+  --brand-background:       #FEFBF7;   /* Warm off-white        */
+  --brand-surface:          #FFFFFF;   /* Clean white           */
+  --brand-surface-warm:     #F9F5EE;   /* Warm cream            */
+  --brand-surface-raised:   #FFFFFF;   /* Elevated cards        */
+
+  /* ── Text Hierarchy ────────────────────────────────────────── */
+  --brand-text-primary:     #1A1A1A;   /* Near-black            */
+  --brand-text-secondary:   #4A4A4A;   /* Dark grey             */
+  --brand-text-muted:       #6B7280;   /* Medium grey           */
+  --brand-text-inverse:     #FEFBF7;   /* Light on dark         */
+  --brand-text-on-green:    #FFFFFF;
+  --brand-text-on-gold:     #3E2C00;
+
+  /* ── Semantic / UI ─────────────────────────────────────────── */
+  --brand-success:          #2E7D32;
+  --brand-warning:          #D4A017;
+  --brand-error:            #C62828;
+  --brand-info:             #1565C0;
+
+  /* ── shadcn/ui Token Overrides (Nawiri brand) ─────────────── */
+  --background:             #FEFBF7;
+  --foreground:             #1A1A1A;
+  --card:                   #FFFFFF;
+  --card-foreground:        #1A1A1A;
+  --popover:                #FFFFFF;
+  --popover-foreground:     #1A1A1A;
+  --primary:                #1B5E20;
+  --primary-foreground:     #FEFBF7;
+  --secondary:              #D4A017;
+  --secondary-foreground:   #1A1A1A;
+  --muted:                  #F3EFE8;
+  --muted-foreground:       #6B7280;
+  --accent:                 #8D6E63;
+  --accent-foreground:      #FEFBF7;
+  --destructive:            #C62828;
+  --border:                 #E8E0D4;
+  --input:                  #DDD6CA;
+  --ring:                   #2E7D32;
+
+  /* ── Charts (Nawiri palette) ───────────────────────────────── */
+  --chart-1: #1B5E20;
+  --chart-2: #D4A017;
+  --chart-3: #8D6E63;
+  --chart-4: #2E7D32;
+  --chart-5: #A1887F;
+
+  /* ── Sidebar ───────────────────────────────────────────────── */
+  --sidebar:                #F3EFE8;
+  --sidebar-foreground:     #1A1A1A;
+  --sidebar-primary:        #1B5E20;
+  --sidebar-primary-foreground: #FEFBF7;
+  --sidebar-accent:         #E8E0D4;
+  --sidebar-accent-foreground: #1A1A1A;
+  --sidebar-border:         #DDD6CA;
+  --sidebar-ring:           #2E7D32;
+
+  /* ── Container Widths ──────────────────────────────────────── */
+  --container-max:          1280px;
+  --container-narrow:       860px;
+  --container-wide:         1440px;
+
+  /* ── Spacing ───────────────────────────────────────────────── */
+  --space-section-y:        clamp(4rem, 8vw, 7rem);
+  --space-section-x:        clamp(1rem, 4vw, 2rem);
+  --space-gap-card:         1.5rem;
+
+  /* ── Typography Scale (fluid clamp where appropriate) ───────── */
+  --text-display:           clamp(2.5rem, 6vw, 4.5rem);
+  --text-h1:                clamp(2rem, 4.5vw, 3rem);
+  --text-h2:                clamp(1.625rem, 3.5vw, 2.25rem);
+  --text-h3:                clamp(1.3rem, 2.5vw, 1.75rem);
+  --text-h4:                1.375rem;
+  --text-h5:                1.125rem;
+  --text-body-lg:           1.25rem;
+  --text-body:              1.0625rem;
+  --text-body-sm:           0.9375rem;
+  --text-caption:           0.8125rem;
+  --text-overline:          0.75rem;
+
+  /* ── Line Heights ──────────────────────────────────────────── */
+  --leading-display:        1.08;
+  --heading-leading:        1.15;
+  --leading-snug:           1.3;
+  --leading-body:           1.65;
+  --leading-relaxed:        1.8;
+
+  /* ── Letter Spacing ────────────────────────────────────────── */
+  --tracking-display:       -0.025em;
+  --tracking-heading:       -0.015em;
+  --tracking-tight:        -0.01em;
+  --tracking-normal:        0em;
+  --tracking-overline:      0.08em;
+
+  /* ── Transitions ──────────────────────────────────────────── */
+  --transition-fast:        150ms ease;
+  --transition-base:        250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth:      400ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow:        600ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ── Shadows (warm-tinted, not cold blue) ─────────────────── */
+  --shadow-xs:
+    0 1px 2px rgba(27, 94, 32, 0.04),
+    0 1px 3px rgba(141, 110, 99, 0.05);
+  --shadow-sm:
+    0 1px 3px rgba(27, 94, 32, 0.04),
+    0 2px 6px rgba(141, 110, 99, 0.06);
+  --shadow-md:
+    0 4px 6px -1px rgba(27, 94, 32, 0.05),
+    0 2px 8px -2px rgba(141, 110, 99, 0.08);
+  --shadow-lg:
+    0 10px 16px -3px rgba(27, 94, 32, 0.06),
+    0 4px 10px -4px rgba(141, 110, 99, 0.08);
+  --shadow-xl:
+    0 20px 28px -5px rgba(27, 94, 32, 0.07),
+    0 8px 16px -6px rgba(141, 110, 99, 0.10);
+  --shadow-glow-green:  0 0 24px rgba(27, 94, 32, 0.15);
+  --shadow-glow-gold:   0 0 24px rgba(212, 160, 23, 0.20);
+  --shadow-inner-warm:  inset 0 2px 4px rgba(141, 110, 99, 0.06);
+
+  /* ── Gradients ─────────────────────────────────────────────── */
+  --gradient-green-dark:
+    linear-gradient(135deg, #1B5E20 0%, #2E7D32 50%, #1B5E20 100%);
+  --gradient-gold-warm:
+    linear-gradient(135deg, #D4A017 0%, #E8C84A 100%);
+  --gradient-hero:
+    linear-gradient(
+      160deg,
+      #0D3B12 0%,
+      #1B5E20 35%,
+      #2E7D32 70%,
+      #1B5E20 100%
+    );
+  --gradient-section-warm:
+    linear-gradient(180deg, #FEFBF7 0%, #F9F5EE 100%);
+  --gradient-section-green:
+    linear-gradient(180deg, #E8F5E9 0%, #FEFBF7 100%);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   DARK MODE  (.dark)  — Secondary to light, but fully functional
+   ═══════════════════════════════════════════════════════════════ */
+.dark {
+  /* ── shadcn/ui Dark Tokens ─────────────────────────────────── */
+  --background:             #151A12;
+  --foreground:             #E8E4DC;
+  --card:                   #1C2318;
+  --card-foreground:        #E8E4DC;
+  --popover:                #1C2318;
+  --popover-foreground:     #E8E4DC;
+  --primary:                #66BB6A;
+  --primary-foreground:     #151A12;
+  --secondary:              #F0C040;
+  --secondary-foreground:   #151A12;
+  --muted:                  #252E20;
+  --muted-foreground:       #9CA89B;
+  --accent:                 #BCAAA4;
+  --accent-foreground:      #151A12;
+  --destructive:            #EF5350;
+  --border:                 rgba(255, 255, 255, 0.08);
+  --input:                  rgba(255, 255, 255, 0.10);
+  --ring:                   #66BB6A;
+
+  /* ── Charts (dark, higher luminance) ───────────────────────── */
+  --chart-1: #66BB6A;
+  --chart-2: #FFD54F;
+  --chart-3: #BCAAA4;
+  --chart-4: #81C784;
+  --chart-5: #D7CCC8;
+
+  /* ── Sidebar (dark) ────────────────────────────────────────── */
+  --sidebar:                #181E14;
+  --sidebar-foreground:     #E8E4DC;
+  --sidebar-primary:        #66BB6A;
+  --sidebar-primary-foreground: #151A12;
+  --sidebar-accent:         #252E20;
+  --sidebar-accent-foreground: #E8E4DC;
+  --sidebar-border:         rgba(255, 255, 255, 0.08);
+  --sidebar-ring:           #66BB6A;
+
+  /* ── Brand Overrides (dark) ────────────────────────────────── */
+  --brand-background:       #151A12;
+  --brand-surface:          #1C2318;
+  --brand-surface-warm:     #222B1D;
+  --brand-surface-raised:   #283222;
+  --brand-primary:          #4CAF50;
+  --brand-primary-light:    #66BB6A;
+  --brand-secondary:        #F0C040;
+  --brand-secondary-light:  #FFD54F;
+  --brand-accent-earth:     #BCAAA4;
+  --brand-text-primary:     #E8E4DC;
+  --brand-text-secondary:   #B0BAA3;
+  --brand-text-muted:       #7A8670;
+  --brand-text-inverse:     #151A12;
+
+  /* ── Dark Shadows ──────────────────────────────────────────── */
+  --shadow-xs:  0 1px 2px rgba(0, 0, 0, 0.25);
+  --shadow-sm:  0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 4px rgba(0, 0, 0, 0.15);
+  --shadow-md:  0 4px 6px -1px rgba(0, 0, 0, 0.35), 0 2px 8px rgba(0, 0, 0, 0.2);
+  --shadow-lg:  0 10px 16px -3px rgba(0, 0, 0, 0.4), 0 4px 10px rgba(0, 0, 0, 0.25);
+  --shadow-xl:  0 20px 28px -5px rgba(0, 0, 0, 0.5), 0 8px 16px rgba(0, 0, 0, 0.3);
+  --shadow-glow-green:  0 0 24px rgba(102, 187, 106, 0.12);
+  --shadow-glow-gold:   0 0 24px rgba(240, 192, 64, 0.12);
+  --shadow-inner-warm:  inset 0 2px 4px rgba(0, 0, 0, 0.2);
+
+  /* ── Dark Gradients ────────────────────────────────────────── */
+  --gradient-hero:
+    linear-gradient(160deg, #0D1F0F 0%, #152117 35%, #1B5E20 70%, #152117 100%);
+  --gradient-section-warm:
+    linear-gradient(180deg, #151A12 0%, #1C2318 100%);
+  --gradient-section-green:
+    linear-gradient(180deg, #1C2318 0%, #151A12 100%);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   BASE LAYER — global resets & defaults
+   ═══════════════════════════════════════════════════════════════ */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    line-height: var(--leading-body);
+    color: var(--brand-text-secondary);
+
+    /*
+     * Subtle paper-like warmth — layered radial gradients at very
+     * low opacity create a barely-there texture that stops the page
+     * from feeling flat and digital. Disappears in dark mode.
+     */
+    background-image:
+      radial-gradient(ellipse at 10% 20%, rgba(139, 90, 43, 0.025) 0%, transparent 55%),
+      radial-gradient(ellipse at 90% 10%, rgba(139, 90, 43, 0.020) 0%, transparent 50%),
+      radial-gradient(ellipse at 60% 90%, rgba(27, 94, 32, 0.015) 0%, transparent 55%),
+      radial-gradient(ellipse at 30% 60%, rgba(212, 160, 23, 0.012) 0%, transparent 45%);
+    background-attachment: fixed;
+  }
+
+  /* Dark mode: no texture (dark bg has its own depth) */
+  .dark body {
+    background-image: none;
+  }
+
+  /* ── Headings use Playfair Display ──────────────────────────── */
+  h1, h2, h3, h4, h5, h6,
+  .font-heading {
+    font-family: var(--font-heading);
+    color: var(--brand-text-primary);
+    font-weight: 700;
+    text-wrap: balance;
+  }
+
+  h1 {
+    font-size: var(--text-h1);
+    line-height: var(--heading-leading);
+    letter-spacing: var(--tracking-heading);
+  }
+
+  h2 {
+    font-size: var(--text-h2);
+    line-height: var(--heading-leading);
+    letter-spacing: var(--tracking-tight);
+  }
+
+  h3 {
+    font-size: var(--text-h3);
+    line-height: var(--leading-snug);
+    letter-spacing: var(--tracking-tight);
+  }
+
+  h4 {
+    font-size: var(--text-h4);
+    line-height: var(--leading-snug);
+  }
+
+  /* ── Links ─────────────────────────────────────────────────── */
+  a {
+    color: var(--brand-primary);
+    transition: color var(--transition-fast);
+  }
+
+  a:hover {
+    color: var(--brand-primary-light);
+  }
+
+  /* ── Selection ─────────────────────────────────────────────── */
+  ::selection {
+    background-color: var(--brand-primary-50);
+    color: var(--brand-primary-dark);
+  }
+
+  .dark ::selection {
+    background-color: rgba(27, 94, 32, 0.35);
+    color: #E8E4DC;
+  }
+
+  /* ── Focus visible ─────────────────────────────────────────── */
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  /* ── Images ────────────────────────────────────────────────── */
+  img,
+  video {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* ── Horizontal rule (warm divider) ────────────────────────── */
+  hr {
+    border: none;
+    height: 1px;
+    background: var(--border);
+    opacity: 0.5;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   UTILITY LAYER — Nawiri-specific helpers
+   ═══════════════════════════════════════════════════════════════ */
+@layer utilities {
+
+  /* ── Section Spacing ───────────────────────────────────────── */
+  .section-padding {
+    padding-top: var(--space-section-y);
+    padding-bottom: var(--space-section-y);
+  }
+
+  .section-padding-compact {
+    padding-top: clamp(2.5rem, 5vw, 4rem);
+    padding-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .section-padding-generous {
+    padding-top: clamp(5rem, 10vw, 9rem);
+    padding-bottom: clamp(5rem, 10vw, 9rem);
+  }
+
+  .section-padding-top {
+    padding-top: var(--space-section-y);
+  }
+
+  .section-padding-bottom {
+    padding-bottom: var(--space-section-y);
+  }
+
+  /* ── Container Utilities ───────────────────────────────────── */
+  .container-site {
+    max-width: var(--container-max);
+    margin-inline: auto;
+    padding-inline: var(--space-section-x);
+  }
+
+  .container-narrow {
+    max-width: var(--container-narrow);
+    margin-inline: auto;
+    padding-inline: var(--space-section-x);
+  }
+
+  .container-wide {
+    max-width: var(--container-wide);
+    margin-inline: auto;
+    padding-inline: var(--space-section-x);
+  }
+
+  /* ── Typography Utilities ──────────────────────────────────── */
+  .text-display {
+    font-family: var(--font-heading);
+    font-size: var(--text-display);
+    line-height: var(--leading-display);
+    letter-spacing: var(--tracking-display);
+    font-weight: 700;
+  }
+
+  .text-overline {
+    font-family: var(--font-sans);
+    font-size: var(--text-overline);
+    line-height: var(--heading-leading);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-overline);
+    font-weight: 600;
+  }
+
+  .text-prose {
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    line-height: var(--leading-body);
+    color: var(--brand-text-secondary);
+  }
+
+  .text-prose-lg {
+    font-family: var(--font-body);
+    font-size: var(--text-body-lg);
+    line-height: var(--leading-body);
+    color: var(--brand-text-secondary);
+  }
+
+  .text-label {
+    font-family: var(--font-sans);
+    font-size: var(--text-body-sm);
+    font-weight: 500;
+    letter-spacing: 0.01em;
+  }
+
+  /* ── Brand Color Utilities ─────────────────────────────────── */
+  .text-brand-green   { color: var(--brand-primary); }
+  .text-brand-gold    { color: var(--brand-secondary); }
+  .text-brand-earth   { color: var(--brand-accent-earth); }
+  .text-brand-muted   { color: var(--brand-text-muted); }
+
+  .bg-brand-green     { background-color: var(--brand-primary); }
+  .bg-brand-gold      { background-color: var(--brand-secondary); }
+  .bg-brand-earth     { background-color: var(--brand-accent-earth); }
+
+  /* ── Surface Utilities ─────────────────────────────────────── */
+  .surface-warm       { background-color: var(--brand-surface-warm); }
+  .surface-paper      { background-color: var(--brand-background); }
+  .surface-raised     {
+    background-color: var(--brand-surface-raised);
+    box-shadow: var(--shadow-md);
+  }
+
+  /* ── Shadow Utilities ──────────────────────────────────────── */
+  .shadow-nawiri-sm   { box-shadow: var(--shadow-sm); }
+  .shadow-nawiri-md   { box-shadow: var(--shadow-md); }
+  .shadow-nawiri-lg   { box-shadow: var(--shadow-lg); }
+  .shadow-nawiri-xl   { box-shadow: var(--shadow-xl); }
+  .shadow-nawiri-glow { box-shadow: var(--shadow-glow-green); }
+  .shadow-gold-glow   { box-shadow: var(--shadow-glow-gold); }
+
+  /* ── Gradient Utilities ────────────────────────────────────── */
+  .gradient-hero {
+    background: var(--gradient-hero);
+    color: var(--brand-text-inverse);
+  }
+
+  .gradient-green-dark {
+    background: var(--gradient-green-dark);
+    color: var(--brand-text-inverse);
+  }
+
+  .gradient-gold-warm {
+    background: var(--gradient-gold-warm);
+    color: var(--brand-text-on-gold);
+  }
+
+  .gradient-section-warm {
+    background: var(--gradient-section-warm);
+  }
+
+  .gradient-section-green {
+    background: var(--gradient-section-green);
+  }
+
+  /* ── Transition Utilities ──────────────────────────────────── */
+  .transition-nawiri   { transition: all var(--transition-base); }
+  .transition-nawiri-slow { transition: all var(--transition-smooth); }
+
+  /* ── Decorative ────────────────────────────────────────────── */
+  .divider-warm {
+    border-color: var(--border);
+    opacity: 0.6;
+  }
+
+  /* ── Accent underline (gold, for headings) ─────────────────── */
+  .accent-underline {
+    position: relative;
+    display: inline-block;
+  }
+
+  .accent-underline::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -0.15em;
+    width: 100%;
+    height: 0.12em;
+    background: var(--brand-secondary);
+    border-radius: 1px;
+    opacity: 0.7;
+  }
+
+  /* ── Card hover lift ───────────────────────────────────────── */
+  .card-lift {
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+  }
+
+  .card-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* ── Body text override (use on elements that need body text) */
+  .font-body {
+    font-family: var(--font-body);
+  }
+
+  .font-ui {
+    font-family: var(--font-sans);
+  }
+}

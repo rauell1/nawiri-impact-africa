@@ -1,0 +1,22 @@
+{
+  "name": "Nawiri Impact Africa",
+  "short_name": "Nawiri",
+  "description": "Rooted Here. Building Together. — A Kenyan NGO delivering programmes in community development, humanitarian response, livelihood support, and social protection.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FEFBF7",
+  "theme_color": "#1B5E20",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "any",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/images/logo-placeholder.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
