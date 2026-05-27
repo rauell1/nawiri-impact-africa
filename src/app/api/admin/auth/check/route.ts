@@ -9,7 +9,7 @@ export async function GET() {
   const cookieStore = await cookies();
   const token = cookieStore.get(getSessionCookieName())?.value;
 
-  if (validateSession(token)) {
+  if (await validateSession(token)) {
     return NextResponse.json({ authenticated: true });
   }
 

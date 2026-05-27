@@ -13,7 +13,7 @@ export async function requireAdminAuth(
 ): Promise<NextResponse | null> {
   const token = request.cookies.get(getSessionCookieName())?.value;
 
-  if (!validateSession(token)) {
+  if (!(await validateSession(token))) {
     return NextResponse.json(
       { error: "Unauthorized. Please log in." },
       { status: 401 }

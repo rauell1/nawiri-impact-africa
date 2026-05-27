@@ -6,7 +6,7 @@ import { validateSession, getSessionCookieName } from "@/lib/admin-auth";
  * NOTE: Next.js 16 shows a deprecation warning for middleware.ts.
  * This still works correctly; it will be migrated to proxy.ts when the API stabilizes.
  */
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Skip non-admin routes
@@ -23,7 +23,7 @@ export function middleware(request: NextRequest) {
   const cookieName = getSessionCookieName();
   const token = request.cookies.get(cookieName)?.value;
 
-  if (!token || !validateSession(token)) {
+  if (!token || !(await validateSession(token))) {
     const loginUrl = new URL("/admin/login", request.url);
     loginUrl.searchParams.set("callbackUrl", pathname);
     return NextResponse.redirect(loginUrl);

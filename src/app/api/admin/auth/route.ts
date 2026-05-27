@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const token = generateToken();
+    const token = await generateToken();
     createSession(token);
 
     const response = NextResponse.json({

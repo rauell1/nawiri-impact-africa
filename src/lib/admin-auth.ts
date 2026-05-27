@@ -1,5 +1,3 @@
-import crypto from "crypto";
-
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "nawiri-admin-2024";
 
 const SESSION_COOKIE_NAME = "nawiri_admin_session";
@@ -9,12 +7,42 @@ export function validatePassword(password: string): boolean {
   return password === ADMIN_PASSWORD;
 }
 
+// Convert string to Uint8Array UTF-8 bytes
+function textEncode(str: string): Uint8Array {
+  return new TextEncoder().encode(str);
+}
+
+// Convert ArrayBuffer to hex string
+function hex(buffer: ArrayBuffer): string {
+  const hashArray = Array.from(new Uint8Array(buffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+// Helper to get Web Crypto SubtleCrypto object in any runtime (Node.js or Edge)
+function getCrypto(): SubtleCrypto {
+  if (typeof globalThis !== "undefined" && globalThis.crypto?.subtle) {
+    return globalThis.crypto.subtle;
+  }
+  throw new Error("Web Crypto API is not available in this environment.");
+}
+
 /** Generate a stateless, signed session token "timestamp:signature" */
-export function generateToken(): string {
+export async function generateToken(): Promise<string> {
   const timestamp = Date.now().toString();
-  const hmac = crypto.createHmac("sha256", ADMIN_PASSWORD);
-  hmac.update(timestamp);
-  const signature = hmac.digest("hex");
+  const subtle = getCrypto();
+  const key = await subtle.importKey(
+    "raw",
+    textEncode(ADMIN_PASSWORD),
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["sign"]
+  );
+  const signatureBuffer = await subtle.sign(
+    "HMAC",
+    key,
+    textEncode(timestamp)
+  );
+  const signature = hex(signatureBuffer);
   return `${timestamp}:${signature}`;
 }
 
@@ -22,7 +50,7 @@ export function createSession(token: string): void {
   // Stateless: session is packaged completely inside the cookie
 }
 
-export function validateSession(token: string | undefined | null): boolean {
+export async function validateSession(token: string | undefined | null): Promise<boolean> {
   if (!token) return false;
   
   const parts = token.split(":");
@@ -37,12 +65,28 @@ export function validateSession(token: string | undefined | null): boolean {
     return false;
   }
   
-  // Validate cryptographic signature
-  const hmac = crypto.createHmac("sha256", ADMIN_PASSWORD);
-  hmac.update(timestamp);
-  const expectedSignature = hmac.digest("hex");
-  
-  return signature === expectedSignature;
+  try {
+    // Validate cryptographic signature
+    const subtle = getCrypto();
+    const key = await subtle.importKey(
+      "raw",
+      textEncode(ADMIN_PASSWORD),
+      { name: "HMAC", hash: "SHA-256" },
+      false,
+      ["sign"]
+    );
+    const expectedSignatureBuffer = await subtle.sign(
+      "HMAC",
+      key,
+      textEncode(timestamp)
+    );
+    const expectedSignature = hex(expectedSignatureBuffer);
+    
+    return signature === expectedSignature;
+  } catch (error) {
+    console.error("Session signature validation failed:", error);
+    return false;
+  }
 }
 
 export function destroySession(token: string): void {
