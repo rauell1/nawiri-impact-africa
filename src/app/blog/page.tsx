@@ -14,20 +14,25 @@ export const metadata: Metadata = createMetadata({
 });
 
 export default async function BlogPage() {
-  const posts = await db.blogPost.findMany({
-    where: { status: "published" },
-    orderBy: { published_date: "desc" },
-    select: {
-      id: true,
-      title: true,
-      slug: true,
-      excerpt: true,
-      cover_image: true,
-      category: true,
-      author_name: true,
-      published_date: true,
-    },
-  });
+  let posts: any[] = [];
+  try {
+    posts = await db.blogPost.findMany({
+      where: { status: "published" },
+      orderBy: { published_date: "desc" },
+      select: {
+        id: true,
+        title: true,
+        slug: true,
+        excerpt: true,
+        cover_image: true,
+        category: true,
+        author_name: true,
+        published_date: true,
+      },
+    });
+  } catch (error) {
+    console.error("Failed to fetch blog posts:", error);
+  }
 
   return (
     <main id="main-content">

@@ -13,20 +13,25 @@ export const metadata: Metadata = createMetadata({
 });
 
 export default async function CareersPage() {
-  const careers = await db.career.findMany({
-    where: { status: "open" },
-    orderBy: { published_date: "desc" },
-    select: {
-      id: true,
-      job_title: true,
-      slug: true,
-      department: true,
-      location: true,
-      employment_type: true,
-      application_deadline: true,
-      is_urgent: true,
-    },
-  });
+  let careers: any[] = [];
+  try {
+    careers = await db.career.findMany({
+      where: { status: "open" },
+      orderBy: { published_date: "desc" },
+      select: {
+        id: true,
+        job_title: true,
+        slug: true,
+        department: true,
+        location: true,
+        employment_type: true,
+        application_deadline: true,
+        is_urgent: true,
+      },
+    });
+  } catch (error) {
+    console.error("Failed to fetch careers:", error);
+  }
 
   return (
     <main id="main-content">

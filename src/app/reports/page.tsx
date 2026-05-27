@@ -15,38 +15,49 @@ export const metadata: Metadata = createMetadata({
 });
 
 async function getPageData() {
-  const [siteSettings, reports] = await Promise.all([
-    db.siteSettings.findUnique({ where: { id: "main" } }),
-    db.report.findMany({
-      where: { status: "published" },
-      orderBy: [{ is_featured: "desc" }, { year: "desc" }, { published_date: "desc" }],
-    }),
-  ]);
+  let siteSettings: any = null;
+  let reports: any[] = [];
 
-  // Parse footer links
-  let footerLinks: { label: string; url: string }[] = [];
   try {
-    footerLinks = JSON.parse(siteSettings?.footer_links || "[]");
-  } catch {
-    footerLinks = [];
+    const [siteRes, reportsRes] = await Promise.all([
+      db.siteSettings.findUnique({ where: { id: "main" } }),
+      db.report.findMany({
+        where: { status: "published" },
+        orderBy: [{ is_featured: "desc" }, { year: "desc" }, { published_date: "desc" }],
+      }),
+    ]);
+    siteSettings = siteRes;
+    reports = reportsRes;
+  } catch (error) {
+    console.error("Failed to fetch reports page data:", error);
   }
 
+  const site = siteSettings
+    ? {
+        ...siteSettings,
+        footer_links: JSON.parse(siteSettings.footer_links || "[]"),
+      }
+    : {
+        site_name: "Nawiri Impact Africa",
+        site_tagline: "Rooted Here. Building Together.",
+        logo_url: "/images/logo-placeholder.svg",
+        footer_links: [] as { label: string; url: string }[],
+        primary_color: "#1B5E20",
+        secondary_color: "#D4A017",
+        footer_description: "",
+        contact_email: "",
+        contact_phone: "",
+        physical_address: "",
+      };
+
   return {
-    site: { ...siteSettings, footer_links: footerLinks },
+    site,
     reports,
   };
 }
 
 export default async function ReportsPage() {
   const { site, reports } = await getPageData();
-
-  if (!site) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-[var(--brand-background)]">
-        <p className="text-[var(--brand-text-muted)]">Unable to load site data.</p>
-      </div>
-    );
-  }
 
   const featured = reports.find((r) => r.is_featured) || null;
   const allReports = reports.filter((r) => !r.is_featured);

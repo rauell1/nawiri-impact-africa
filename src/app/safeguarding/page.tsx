@@ -15,34 +15,46 @@ export const metadata: Metadata = createMetadata({
 });
 
 async function getPageData() {
-  const [siteSettings, safeguardingSettings] = await Promise.all([
-    db.siteSettings.findUnique({ where: { id: "main" } }),
-    db.safeguardingSettings.findUnique({ where: { id: "main" } }),
-  ]);
+  let siteSettings: any = null;
+  let safeguardingSettings: any = null;
 
-  let footerLinks: { label: string; url: string }[] = [];
   try {
-    footerLinks = JSON.parse(siteSettings?.footer_links || "[]");
-  } catch {
-    footerLinks = [];
+    const [siteRes, safeguardingRes] = await Promise.all([
+      db.siteSettings.findUnique({ where: { id: "main" } }),
+      db.safeguardingSettings.findUnique({ where: { id: "main" } }),
+    ]);
+    siteSettings = siteRes;
+    safeguardingSettings = safeguardingRes;
+  } catch (error) {
+    console.error("Failed to fetch safeguarding page data:", error);
   }
 
+  const site = siteSettings
+    ? {
+        ...siteSettings,
+        footer_links: JSON.parse(siteSettings.footer_links || "[]"),
+      }
+    : {
+        site_name: "Nawiri Impact Africa",
+        site_tagline: "Rooted Here. Building Together.",
+        logo_url: "/images/logo-placeholder.svg",
+        footer_links: [] as { label: string; url: string }[],
+        primary_color: "#1B5E20",
+        secondary_color: "#D4A017",
+        footer_description: "",
+        contact_email: "safeguarding@nawiriimpactafrica.org",
+        contact_phone: "+254 700 000 000",
+        physical_address: "Nairobi, Kenya",
+      };
+
   return {
-    site: { ...siteSettings, footer_links: footerLinks },
+    site,
     safeguarding: safeguardingSettings,
   };
 }
 
 export default async function SafeguardingPage() {
   const { site, safeguarding } = await getPageData();
-
-  if (!site) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-[var(--brand-background)]">
-        <p className="text-[var(--brand-text-muted)]">Unable to load site data.</p>
-      </div>
-    );
-  }
 
   const headline = safeguarding?.safeguarding_headline || "Safeguarding & Accountability";
 
