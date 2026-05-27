@@ -17,6 +17,7 @@ The application uses the Next.js App Router. The following table represents the 
 | **`/impact`** | Impact Stories & Stats Grid | `src/app/impact/page.tsx` | `Story` (published) | Public |
 | **`/stories/[slug]`** | Single Impact Narrative Reader | `src/app/stories/[slug]/page.tsx` | `Story` (find by slug) | Public |
 | **`/reports`** | PDF Annual/Financial Reports | `src/app/reports/page.tsx` | `Report` (published) | Public |
+| **`/partnerships`** | Strategic Alliances & Logos | `src/app/partnerships/page.tsx` | `Partner` (published) | Public |
 | **`/careers`** | Job Portal & Open Positions | `src/app/careers/page.tsx` | `Career` (status: open) | Public |
 | **`/careers/[slug]`** | Job Specs & Application Form | `src/app/careers/[slug]/page.tsx` | `Career` (find by slug) | Public |
 | **`/blog`** | News & Program Updates | `src/app/blog/page.tsx` | `BlogPost` (published) | Public |
