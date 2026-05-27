@@ -43,3 +43,9 @@ dev.log
 # OS metadata
 .DS_Store
 Thumbs.db
+
+# SQLite database files
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3

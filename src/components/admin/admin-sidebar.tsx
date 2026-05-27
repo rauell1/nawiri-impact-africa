@@ -16,6 +16,8 @@ import {
   LogOut,
   Leaf,
   ExternalLink,
+  Info,
+  Shield,
 } from "lucide-react";
 import {
   Sidebar,
@@ -46,6 +48,8 @@ const navGroups = [
     items: [
       { title: "Site Settings", href: "/admin/site-settings", icon: Settings },
       { title: "Home Settings", href: "/admin/home-settings", icon: Home },
+      { title: "About Settings", href: "/admin/about-settings", icon: Info },
+      { title: "Safeguarding", href: "/admin/safeguarding", icon: Shield },
     ],
   },
   {
@@ -60,6 +64,7 @@ const navGroups = [
       { title: "Partners", href: "/admin/partners", icon: Heart },
     ],
   },
+
   {
     label: "Communications",
     items: [

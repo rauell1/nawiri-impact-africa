@@ -222,3 +222,30 @@ model ContactSubmission {
   message   String
   createdAt DateTime @default(now())
 }
+
+// ─── ABOUT PAGE SETTINGS (single row) ───
+model AboutSettings {
+  id                String   @id @default("main")
+  about_headline    String   @default("About Nawiri Impact Africa")
+  about_body        String   @default("")
+  mission_statement String   @default("")
+  vision_statement  String   @default("")
+  values            String   @default("[]") // JSON string: { icon: string, title: string, description: string }[]
+  about_hero_image  String   @default("/images/about-hero.jpg")
+  history_timeline  String   @default("[]") // JSON string: { year: string, event: string }[]
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+// ─── SAFEGUARDING SETTINGS (single row) ───
+model SafeguardingSettings {
+  id                      String   @id @default("main")
+  safeguarding_headline   String   @default("Safeguarding & Accountability")
+  commitment_statement    String   @default("")
+  reporting_contact_email String   @default("safeguarding@nawiriimpactafrica.org")
+  policy_documents        String   @default("[]") // JSON string: { title: string, file_url: string }[]
+  last_reviewed_date      DateTime @default(now())
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+}
+

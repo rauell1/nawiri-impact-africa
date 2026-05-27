@@ -5,10 +5,11 @@ import { FileText, Download, Shield, Clock } from "lucide-react";
 
 interface PolicyCardProps {
   title: string;
+  file_url: string;
   index: number;
 }
 
-function PolicyCard({ title, index }: PolicyCardProps) {
+function PolicyCard({ title, file_url, index }: PolicyCardProps) {
   return (
     <motion.article
       initial={{ opacity: 0, y: 20 }}
@@ -25,8 +26,10 @@ function PolicyCard({ title, index }: PolicyCardProps) {
       </h3>
       <div className="mt-auto pt-4">
         <a
-          href="#"
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-bold bg-[var(--brand-primary)] text-[var(--brand-text-on-green)] hover:bg-[var(--brand-primary-light)] transition-colors shadow-nawiri-sm"
+          href={file_url || "#"}
+          target={file_url && file_url !== "#" ? "_blank" : undefined}
+          rel={file_url && file_url !== "#" ? "noopener noreferrer" : undefined}
+          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-bold bg-[var(--brand-primary)] text-white hover:opacity-90 transition-opacity shadow-nawiri-sm"
         >
           <Download className="w-4 h-4" />
           Download PDF
@@ -36,15 +39,49 @@ function PolicyCard({ title, index }: PolicyCardProps) {
   );
 }
 
-const POLICIES = [
-  "Safeguarding Policy (Child Protection & PSEA)",
-  "Code of Conduct",
-  "Complaints & Feedback Mechanism",
-  "Anti-Fraud and Corruption Policy",
-  "Data Protection Policy",
-];
+interface SafeguardingContentProps {
+  safeguarding: {
+    safeguarding_headline: string;
+    commitment_statement: string;
+    reporting_contact_email: string;
+    policy_documents: string; // JSON string: { title: string, file_url: string }[]
+    last_reviewed_date: string | Date;
+  } | null;
+}
 
-export default function SafeguardingContent() {
+export default function SafeguardingContent({ safeguarding }: SafeguardingContentProps) {
+  // Extract commitment statement
+  const commitment = safeguarding?.commitment_statement || 
+    "Nawiri Impact Africa is committed to the safety, dignity, and protection of all people we work with, particularly children and vulnerable adults. We have zero tolerance for abuse, exploitation, or harassment in any form. All staff, volunteers, and partners are required to uphold our Safeguarding Policy and report concerns immediately.";
+  
+  // Extract contact email
+  const contactEmail = safeguarding?.reporting_contact_email || "safeguarding@nawiriimpactafrica.org";
+
+  // Parse policies
+  let policiesList: { title: string; file_url: string }[] = [];
+  try {
+    policiesList = JSON.parse(safeguarding?.policy_documents || "[]");
+  } catch {
+    policiesList = [];
+  }
+  if (policiesList.length === 0) {
+    policiesList = [
+      { title: "Safeguarding Policy (Child Protection & PSEA)", file_url: "#" },
+      { title: "Code of Conduct", file_url: "#" },
+      { title: "Complaints & Feedback Mechanism", file_url: "#" },
+      { title: "Anti-Fraud and Corruption Policy", file_url: "#" },
+      { title: "Data Protection Policy", file_url: "#" }
+    ];
+  }
+
+  // Format last reviewed date
+  const lastReviewedText = safeguarding?.last_reviewed_date
+    ? new Date(safeguarding.last_reviewed_date).toLocaleDateString("en-US", {
+        month: "long",
+        year: "numeric",
+      })
+    : "January 2025";
+
   return (
     <>
       {/* Commitment Statement */}
@@ -55,13 +92,8 @@ export default function SafeguardingContent() {
               <Shield className="w-8 h-8 text-white" />
             </div>
             <h2 className="text-h3 mb-6">Our Commitment</h2>
-            <p className="text-prose-lg text-[var(--brand-text-secondary)] max-w-3xl mx-auto leading-relaxed">
-              Nawiri Impact Africa is committed to the safety, dignity, and
-              protection of all people we work with, particularly children and
-              vulnerable adults. We have zero tolerance for abuse, exploitation,
-              or harassment in any form. All staff, volunteers, and partners are
-              required to uphold our Safeguarding Policy and report concerns
-              immediately.
+            <p className="text-prose-lg text-[var(--brand-text-secondary)] max-w-3xl mx-auto leading-relaxed whitespace-pre-line">
+              {commitment}
             </p>
           </div>
         </div>
@@ -83,8 +115,8 @@ export default function SafeguardingContent() {
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {POLICIES.map((policy, i) => (
-              <PolicyCard key={policy} title={policy} index={i} />
+            {policiesList.map((policy, i) => (
+              <PolicyCard key={policy.title} title={policy.title} file_url={policy.file_url} index={i} />
             ))}
           </div>
         </div>
@@ -104,11 +136,11 @@ export default function SafeguardingContent() {
               confidentially.
             </p>
             <a
-              href="mailto:safeguarding@nawiriimpactafrica.org"
+              href={`mailto:${contactEmail}`}
               className="inline-flex items-center gap-3 px-7 py-3.5 rounded-lg font-bold text-[var(--brand-text-on-gold)] bg-[var(--brand-secondary)] hover:opacity-90 transition-opacity shadow-nawiri-sm text-lg"
             >
               <Shield className="w-5 h-5" />
-              safeguarding@nawiriimpactafrica.org
+              {contactEmail}
             </a>
             <p className="text-white/50 text-sm font-ui mt-4">
               All reports are treated with strict confidentiality.
@@ -125,7 +157,7 @@ export default function SafeguardingContent() {
             <span className="text-sm font-ui text-[var(--brand-text-muted)]">
               Policies last reviewed:{" "}
               <span className="font-semibold text-[var(--brand-text-primary)]">
-                January 2025
+                {lastReviewedText}
               </span>
             </span>
           </div>
@@ -134,3 +166,4 @@ export default function SafeguardingContent() {
     </>
   );
 }
+

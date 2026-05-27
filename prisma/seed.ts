@@ -600,6 +600,70 @@ async function seed() {
   console.log("   - 4 team members created");
   console.log("   - 4 reports created");
   console.log("   - 3 careers created");
+
+  // ─── ABOUT SETTINGS ───
+  await prisma.aboutSettings.upsert({
+    where: { id: "main" },
+    update: {},
+    create: {
+      id: "main",
+      about_headline: "About Nawiri Impact Africa",
+      about_body: "Nawiri Impact Africa, formerly operating as World Relief Kenya, is a Kenyan NGO undergoing a complete organizational identity transition. It is separating from its former international affiliation to become a fully independent, locally governed entity. This transition is a significant organizational milestone — the new brand, the new name, and the new website all represent its commitment to being a locally rooted, community-driven institution rather than a branch of an international body.\n\nThe organization works across Kenya delivering programmes in community development, humanitarian response, livelihood support, and social protection.",
+      mission_statement: "To walk alongside Kenyan communities — delivering programmes that build resilience, restore dignity, and create lasting opportunity.",
+      vision_statement: "A Kenya where every community has the agency, resources, and support to thrive.",
+      about_hero_image: "/images/about-hero.jpg",
+      values: JSON.stringify([
+        {
+          icon: "ShieldCheck",
+          title: "Integrity",
+          description: "We uphold the highest standards of transparency and accountability in everything we do — from financial stewardship to community engagement."
+        },
+        {
+          icon: "Users",
+          title: "Community",
+          description: "We believe lasting change comes from within. We walk alongside communities, listening first and co-creating solutions that truly fit."
+        },
+        {
+          icon: "Heart",
+          title: "Dignity",
+          description: "Every person has inherent worth. Our programmes are designed to empower, not to create dependency — restoring dignity at every step."
+        },
+        {
+          icon: "Star",
+          title: "Excellence",
+          description: "We pursue the highest quality in our work, grounded in evidence and learning. Good enough is never enough when lives are at stake."
+        }
+      ]),
+      history_timeline: JSON.stringify([
+        { year: "1994", event: "Established operations in Kenya as a branch of World Relief, responding to acute local humanitarian needs." },
+        { year: "2005", event: "Expanded programming into Community Livelihoods and child development in peri-urban areas." },
+        { year: "2015", event: "Scaled up health, nutrition, and drought resilience initiatives across dryland (ASAL) counties." },
+        { year: "2024", event: "Transitioned to a fully independent, locally-governed Kenyan NGO under the name Nawiri Impact Africa." }
+      ])
+    }
+  });
+  console.log("   - About settings created");
+
+  // ─── SAFEGUARDING SETTINGS ───
+  await prisma.safeguardingSettings.upsert({
+    where: { id: "main" },
+    update: {},
+    create: {
+      id: "main",
+      safeguarding_headline: "Safeguarding & Accountability",
+      commitment_statement: "Nawiri Impact Africa is committed to the safety, dignity, and protection of all people we work with, particularly children and vulnerable adults. We have zero tolerance for abuse, exploitation, or harassment in any form. All staff, volunteers, and partners are required to uphold our Safeguarding Policy and report concerns immediately.",
+      reporting_contact_email: "safeguarding@nawiriimpactafrica.org",
+      policy_documents: JSON.stringify([
+        { "title": "Safeguarding Policy (Child Protection & PSEA)", "file_url": "#" },
+        { "title": "Code of Conduct", "file_url": "#" },
+        { "title": "Complaints & Feedback Mechanism", "file_url": "#" },
+        { "title": "Anti-Fraud and Corruption Policy", "file_url": "#" },
+        { "title": "Data Protection Policy", "file_url": "#" }
+      ]),
+      last_reviewed_date: new Date("2025-01-15")
+    }
+  });
+  console.log("   - Safeguarding settings created");
 }
 
 seed()

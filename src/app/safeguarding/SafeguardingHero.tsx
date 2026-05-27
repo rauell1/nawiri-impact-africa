@@ -2,7 +2,11 @@
 
 import { motion } from "framer-motion";
 
-export default function SafeguardingHero() {
+interface SafeguardingHeroProps {
+  headline: string;
+}
+
+export default function SafeguardingHero({ headline }: SafeguardingHeroProps) {
   return (
     <div className="relative z-10 container-site text-center py-20">
       <motion.div
@@ -14,7 +18,7 @@ export default function SafeguardingHero() {
           Protection &amp; Accountability
         </span>
         <h1 className="text-display text-white max-w-3xl mx-auto">
-          Safeguarding &amp; Accountability
+          {headline}
         </h1>
         <p className="text-prose-lg text-white/80 mt-4 max-w-2xl mx-auto">
           We hold ourselves to the highest standards of protection, transparency,
@@ -24,3 +28,4 @@ export default function SafeguardingHero() {
     </div>
   );
 }
+

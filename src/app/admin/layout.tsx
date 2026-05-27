@@ -115,6 +115,8 @@ function getBreadcrumb(pathname: string): string {
     "/admin/dashboard": "Dashboard",
     "/admin/site-settings": "Site Settings",
     "/admin/home-settings": "Home Settings",
+    "/admin/about-settings": "About Settings",
+    "/admin/safeguarding": "Safeguarding",
     "/admin/programmes": "Programmes",
     "/admin/stories": "Stories",
     "/admin/blog": "Blog Posts",

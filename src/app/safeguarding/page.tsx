@@ -15,7 +15,10 @@ export const metadata: Metadata = createMetadata({
 });
 
 async function getPageData() {
-  const siteSettings = await db.siteSettings.findUnique({ where: { id: "main" } });
+  const [siteSettings, safeguardingSettings] = await Promise.all([
+    db.siteSettings.findUnique({ where: { id: "main" } }),
+    db.safeguardingSettings.findUnique({ where: { id: "main" } }),
+  ]);
 
   let footerLinks: { label: string; url: string }[] = [];
   try {
@@ -26,11 +29,12 @@ async function getPageData() {
 
   return {
     site: { ...siteSettings, footer_links: footerLinks },
+    safeguarding: safeguardingSettings,
   };
 }
 
 export default async function SafeguardingPage() {
-  const { site } = await getPageData();
+  const { site, safeguarding } = await getPageData();
 
   if (!site) {
     return (
@@ -39,6 +43,8 @@ export default async function SafeguardingPage() {
       </div>
     );
   }
+
+  const headline = safeguarding?.safeguarding_headline || "Safeguarding & Accountability";
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -60,14 +66,15 @@ export default async function SafeguardingPage() {
           />
           <div className="absolute inset-0 bg-gradient-to-br from-[var(--brand-primary-dark)]/85 via-[var(--brand-primary)]/80 to-[var(--brand-primary-dark)]/90" />
 
-          <SafeguardingHero />
+          <SafeguardingHero headline={headline} />
         </section>
 
         {/* ── Content ── */}
-        <SafeguardingContent />
+        <SafeguardingContent safeguarding={safeguarding} />
       </main>
 
       <Footer settings={site} />
     </div>
   );
 }
+
