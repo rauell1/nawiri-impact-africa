@@ -28,6 +28,7 @@ import {
 } from "@/components/ui/select";
 import { AdminFormFooter } from "@/components/admin/admin-form-footer";
 import { toast } from "sonner";
+import ImageUploader from "@/components/admin/ImageUploader";
 
 /* ─── Types ──────────────────────────────────────────────────── */
 
@@ -329,15 +330,13 @@ export default function HomeSettingsPage() {
 
               <Separator />
 
-              <div className="space-y-2">
-                <Label htmlFor="hero_background_image">Background Image URL</Label>
-                <Input
-                  id="hero_background_image"
-                  value={settings.hero_background_image}
-                  onChange={(e) => updateField("hero_background_image", e.target.value)}
-                  placeholder="/images/hero-bg.jpg"
-                />
-              </div>
+              <ImageUploader
+                label="Hero Background Image"
+                value={settings.hero_background_image}
+                onChange={(val) => updateField("hero_background_image", val)}
+                description="High-resolution primary banner image displayed on the landing page background. Recommend min 1920x1080px."
+                fallbackPlaceholder="/images/hero-bg.jpg"
+              />
               <div className="space-y-2">
                 <Label htmlFor="hero_background_video_url">Background Video URL (optional)</Label>
                 <Input

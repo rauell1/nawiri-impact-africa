@@ -12,6 +12,7 @@ import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AdminFormFooter } from "@/components/admin/admin-form-footer";
 import { toast } from "sonner";
+import ImageUploader from "@/components/admin/ImageUploader";
 
 interface SiteSettings {
   id: string;
@@ -225,31 +226,21 @@ export default function SiteSettingsPage() {
                 </div>
               </div>
               <Separator />
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="logo_url">Logo URL (Light)</Label>
-                  <Input
-                    id="logo_url"
-                    value={settings.logo_url}
-                    onChange={(e) => updateField("logo_url", e.target.value)}
-                    placeholder="/images/logo.svg"
-                  />
-                  <p className="text-xs text-muted-foreground">
-                    Path or URL to the main logo used on light backgrounds
-                  </p>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="logo_dark_url">Logo URL (Dark)</Label>
-                  <Input
-                    id="logo_dark_url"
-                    value={settings.logo_dark_url || ""}
-                    onChange={(e) => updateField("logo_dark_url", e.target.value || null)}
-                    placeholder="/images/logo-dark.svg"
-                  />
-                  <p className="text-xs text-muted-foreground">
-                    Optional alternate logo for dark backgrounds
-                  </p>
-                </div>
+              <div className="space-y-5">
+                <ImageUploader
+                  label="Logo (Light Background)"
+                  value={settings.logo_url}
+                  onChange={(val) => updateField("logo_url", val)}
+                  description="Main logo image displayed in the website header. Transparent SVG or PNG recommended."
+                  fallbackPlaceholder="/images/logo-placeholder.svg"
+                />
+                <ImageUploader
+                  label="Logo (Dark Background)"
+                  value={settings.logo_dark_url || ""}
+                  onChange={(val) => updateField("logo_dark_url", val || null)}
+                  description="Optional alternate logo image for dark footer or dark themes."
+                  fallbackPlaceholder="/images/logo-placeholder.svg"
+                />
                 <div className="space-y-2">
                   <Label htmlFor="favicon_url">Favicon URL</Label>
                   <Input
