@@ -654,11 +654,11 @@ async function seed() {
       commitment_statement: "Nawiri Impact Africa is committed to the safety, dignity, and protection of all people we work with, particularly children and vulnerable adults. We have zero tolerance for abuse, exploitation, or harassment in any form. All staff, volunteers, and partners are required to uphold our Safeguarding Policy and report concerns immediately.",
       reporting_contact_email: "safeguarding@nawiriimpactafrica.org",
       policy_documents: JSON.stringify([
-        { "title": "Safeguarding Policy (Child Protection & PSEA)", "file_url": "#" },
-        { "title": "Code of Conduct", "file_url": "#" },
-        { "title": "Complaints & Feedback Mechanism", "file_url": "#" },
-        { "title": "Anti-Fraud and Corruption Policy", "file_url": "#" },
-        { "title": "Data Protection Policy", "file_url": "#" }
+        { "title": "Safeguarding Policy (Child Protection & PSEA)", "file_url": "/reports/safeguarding-policy.pdf" },
+        { "title": "Code of Conduct", "file_url": "/reports/code-of-conduct.pdf" },
+        { "title": "Complaints & Feedback Mechanism", "file_url": "/reports/complaints-mechanism.pdf" },
+        { "title": "Anti-Fraud and Corruption Policy", "file_url": "/reports/anti-fraud-policy.pdf" },
+        { "title": "Data Protection Policy", "file_url": "/reports/data-protection-policy.pdf" }
       ]),
       last_reviewed_date: new Date("2025-01-15")
     }

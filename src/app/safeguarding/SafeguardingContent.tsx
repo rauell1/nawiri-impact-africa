@@ -64,13 +64,13 @@ export default function SafeguardingContent({ safeguarding }: SafeguardingConten
   } catch {
     policiesList = [];
   }
-  if (policiesList.length === 0) {
+  if (policiesList.length === 0 || policiesList.every(p => p.file_url === "#")) {
     policiesList = [
-      { title: "Safeguarding Policy (Child Protection & PSEA)", file_url: "#" },
-      { title: "Code of Conduct", file_url: "#" },
-      { title: "Complaints & Feedback Mechanism", file_url: "#" },
-      { title: "Anti-Fraud and Corruption Policy", file_url: "#" },
-      { title: "Data Protection Policy", file_url: "#" }
+      { title: "Safeguarding Policy (Child Protection & PSEA)", file_url: "/reports/safeguarding-policy.pdf" },
+      { title: "Code of Conduct", file_url: "/reports/code-of-conduct.pdf" },
+      { title: "Complaints & Feedback Mechanism", file_url: "/reports/complaints-mechanism.pdf" },
+      { title: "Anti-Fraud and Corruption Policy", file_url: "/reports/anti-fraud-policy.pdf" },
+      { title: "Data Protection Policy", file_url: "/reports/data-protection-policy.pdf" }
     ];
   }
 
