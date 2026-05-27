@@ -7,6 +7,8 @@ import Image from "next/image";
 import SafeguardingHero from "./SafeguardingHero";
 import SafeguardingContent from "./SafeguardingContent";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = createMetadata({
   title: "Safeguarding & Accountability",
   description:

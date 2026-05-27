@@ -29,6 +29,7 @@ async function seed() {
       footer_description:
         "Nawiri Impact Africa is a Kenyan NGO delivering programmes in community development, humanitarian response, livelihood support, and social protection across the country.",
       footer_links: JSON.stringify([
+        { label: "Home", url: "/" },
         { label: "About", url: "/about" },
         { label: "Programmes", url: "/programmes" },
         { label: "Impact & Stories", url: "/impact" },

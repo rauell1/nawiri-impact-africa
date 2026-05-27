@@ -61,7 +61,7 @@ const navGroups = [
       { title: "Reports", href: "/admin/reports", icon: FileText },
       { title: "Careers", href: "/admin/careers", icon: Briefcase },
       { title: "Team Members", href: "/admin/team", icon: Users },
-      { title: "Partners", href: "/admin/partners", icon: Heart },
+      { title: "Partnerships", href: "/admin/partners", icon: Heart },
     ],
   },
 

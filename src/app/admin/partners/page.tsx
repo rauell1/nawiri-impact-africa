@@ -323,7 +323,7 @@ export default function AdminPartnersPage() {
                         {partner.is_featured ? (
                           <Badge variant="outline" className="text-amber-600 border-amber-300 text-[11px]">Featured</Badge>
                         ) : (
-                          <span className="text-muted-foreground">—</span>
+                          <span className="text-muted-foreground">-</span>
                         )}
                       </td>
                       <td className="py-3 pr-4">

@@ -175,7 +175,7 @@ export default function AdminCareersPage() {
   }
 
   function formatDate(dateStr: string) {
-    if (!dateStr) return "—";
+    if (!dateStr) return "No deadline";
     return new Date(dateStr).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
   }
 

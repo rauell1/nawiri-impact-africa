@@ -16,6 +16,8 @@ import {
 import CareerDetailClient from "./CareerDetailClient";
 import JobApplicationForm from "../JobApplicationForm";
 
+export const dynamic = "force-dynamic";
+
 interface Props {
   params: Promise<{ slug: string }>;
 }
@@ -61,7 +63,7 @@ export default async function CareerDetailPage({ params }: Props) {
   }
 
   const subject = encodeURIComponent(
-    `Application: ${career.job_title} — ${career.department}`
+    `Application: ${career.job_title} - ${career.department}`
   );
   const mailto = career.application_email
     ? `mailto:${career.application_email}?subject=${subject}`
@@ -88,6 +90,36 @@ export default async function CareerDetailPage({ params }: Props) {
             { name: "Careers", path: "/careers" },
             { name: career.job_title, path: `/careers/${career.slug}` },
           ]),
+        }}
+      />
+
+      {/* JSON-LD: JobPosting */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "JobPosting",
+            title: career.job_title,
+            description: career.description || career.requirements || "",
+            datePosted: career.published_date?.toISOString() ?? new Date().toISOString(),
+            validThrough: career.application_deadline?.toISOString(),
+            employmentType: career.employment_type?.toUpperCase().replace("-", "_") ?? "FULL_TIME",
+            hiringOrganization: {
+              "@type": "Organization",
+              name: "Nawiri Impact Africa",
+              sameAs: "https://nawiriimpactafrica.org",
+            },
+            jobLocation: {
+              "@type": "Place",
+              address: {
+                "@type": "PostalAddress",
+                addressLocality: career.location || "Nairobi",
+                addressCountry: "KE",
+              },
+            },
+            directApply: !!career.application_email,
+          }),
         }}
       />
 

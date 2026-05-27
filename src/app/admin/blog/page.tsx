@@ -324,7 +324,7 @@ export default function AdminBlogPage() {
                         <TableCell className="hidden sm:table-cell text-sm text-muted-foreground">
                           {p.published_date
                             ? new Date(p.published_date).toLocaleDateString()
-                            : "—"}
+                            : "-"}
                         </TableCell>
                         <TableCell className="text-right">
                           <div className="flex items-center justify-end gap-1">

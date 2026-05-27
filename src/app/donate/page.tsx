@@ -15,6 +15,8 @@ import PartnershipForm from "./PartnershipForm";
 import VolunteerForm from "./VolunteerForm";
 import DonateHero from "./DonateHero";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = createMetadata({
   title: "Support Our Work",
   description:

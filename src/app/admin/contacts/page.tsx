@@ -178,7 +178,7 @@ export default function AdminContactsPage() {
               {totalPages > 1 && (
                 <div className="flex items-center justify-between mt-4 pt-4 border-t">
                   <p className="text-xs text-muted-foreground">
-                    Showing {((page - 1) * PAGE_SIZE) + 1}–{Math.min(page * PAGE_SIZE, total)} of {total}
+                    Showing {((page - 1) * PAGE_SIZE) + 1}-{Math.min(page * PAGE_SIZE, total)} of {total}
                   </p>
                   <div className="flex items-center gap-2">
                     <Button

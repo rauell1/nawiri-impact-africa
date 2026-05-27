@@ -8,10 +8,12 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = createMetadata({
   title: "About Us",
   description:
-    "Learn about Nawiri Impact Africa — our mission, vision, values, and the team driving change in communities across Kenya.",
+    "Learn about Nawiri Impact Africa: our mission, vision, values, and the team driving change in communities across Kenya.",
   path: "/about",
 });
 
@@ -62,10 +64,10 @@ export default async function AboutPage() {
 
   // Extract from database-driven aboutSettings
   const aboutHeadline = aboutSettings?.about_headline || "About Nawiri Impact Africa";
-  const mission = aboutSettings?.mission_statement || site.footer_description || "To walk alongside Kenyan communities — delivering programmes that build resilience, restore dignity, and create lasting opportunity.";
+  const mission = aboutSettings?.mission_statement || site.footer_description || "To walk alongside Kenyan communities, delivering programmes that build resilience, restore dignity, and create lasting opportunity.";
   const vision = aboutSettings?.vision_statement || "A Kenya where every community has the agency, resources, and support to thrive.";
   const heroImage = aboutSettings?.about_hero_image || "/images/about-hero.jpg";
-  const aboutBody = aboutSettings?.about_body || "Nawiri Impact Africa, formerly operating as World Relief Kenya, is a Kenyan NGO undergoing a complete organizational identity transition. It is separating from its former international affiliation to become a fully independent, locally governed entity. This transition is a significant organizational milestone — the new brand, the new name, and the new website all represent its commitment to being a locally rooted, community-driven institution rather than a branch of an international body.\n\nThe organization works across Kenya delivering programmes in community development, humanitarian response, livelihood support, and social protection.";
+  const aboutBody = aboutSettings?.about_body || "Nawiri Impact Africa, formerly operating as World Relief Kenya, is a Kenyan NGO undergoing a complete organizational identity transition. It is separating from its former international affiliation to become a fully independent, locally governed entity. This transition is a significant organizational milestone: the new brand, the new name, and the new website all represent its commitment to being a locally rooted, community-driven institution rather than a branch of an international body.\n\nThe organization works across Kenya delivering programmes in community development, humanitarian response, livelihood support, and social protection.";
 
   // Parse values
   let valuesList: { title: string; icon: string; description: string }[] = [];
@@ -79,7 +81,7 @@ export default async function AboutPage() {
       {
         icon: "ShieldCheck",
         title: "Integrity",
-        description: "We uphold the highest standards of transparency and accountability in everything we do — from financial stewardship to community engagement.",
+        description: "We uphold the highest standards of transparency and accountability in everything we do, from financial stewardship to community engagement.",
       },
       {
         icon: "Users",
@@ -89,7 +91,7 @@ export default async function AboutPage() {
       {
         icon: "Heart",
         title: "Dignity",
-        description: "Every person has inherent worth. Our programmes are designed to empower, not to create dependency — restoring dignity at every step.",
+        description: "Every person has inherent worth. Our programmes are designed to empower, not to create dependency, restoring dignity at every step.",
       },
       {
         icon: "Star",

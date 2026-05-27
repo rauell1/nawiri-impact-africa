@@ -6,6 +6,8 @@ import { ArrowLeft } from "lucide-react";
 import CareersListClient from "./CareersListClient";
 import JobApplicationForm from "./JobApplicationForm";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = createMetadata({
   title: "Careers",
   description:

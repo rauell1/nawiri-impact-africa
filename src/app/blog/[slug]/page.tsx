@@ -7,6 +7,8 @@ import Link from "next/link";
 import { ArrowLeft, Calendar, User } from "lucide-react";
 import BlogDetailClient from "./BlogDetailClient";
 
+export const dynamic = "force-dynamic";
+
 interface Props {
   params: Promise<{ slug: string }>;
 }
@@ -69,6 +71,40 @@ export default async function BlogPostPage({ params }: Props) {
         }}
       />
 
+      {/* JSON-LD: Article */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            headline: post.title,
+            description: post.excerpt || "",
+            image: post.cover_image
+              ? [`https://nawiriimpactafrica.org${post.cover_image}`]
+              : [],
+            datePublished: post.published_date?.toISOString(),
+            dateModified: post.updatedAt?.toISOString(),
+            author: {
+              "@type": "Person",
+              name: post.author_name || "Nawiri Impact Africa",
+            },
+            publisher: {
+              "@type": "Organization",
+              name: "Nawiri Impact Africa",
+              logo: {
+                "@type": "ImageObject",
+                url: "https://nawiriimpactafrica.org/images/logo-placeholder.svg",
+              },
+            },
+            mainEntityOfPage: {
+              "@type": "WebPage",
+              "@id": `https://nawiriimpactafrica.org/blog/${post.slug}`,
+            },
+          }),
+        }}
+      />
+
       <main id="main-content">
       {/* ── Back Link ─────────────────────────────────────────── */}
       <div className="bg-[var(--brand-background)] border-b border-[var(--border)]">
@@ -106,7 +142,7 @@ export default async function BlogPostPage({ params }: Props) {
             <BlogDetailClient
               category={post.category}
               date={formatDate(post.published_date)}
-              authorName={post.author_name}
+              authorName={post.author_name ?? undefined}
             />
 
             {/* Title */}

@@ -9,6 +9,8 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 
+export const dynamic = "force-dynamic";
+
 /* ── Data fetchers ─────────────────────────────────────────── */
 async function getStory(slug: string) {
   const story = await db.story.findUnique({

@@ -6,6 +6,8 @@ import Image from "next/image";
 import { ArrowLeft, Calendar } from "lucide-react";
 import BlogListClient from "./BlogListClient";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = createMetadata({
   title: "Blog & News",
   description:
