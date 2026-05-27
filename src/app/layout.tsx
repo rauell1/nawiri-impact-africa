@@ -4,6 +4,7 @@ import { Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { db } from "@/lib/db";
+import Script from "next/script";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -139,6 +140,22 @@ export default async function RootLayout({
       } as React.CSSProperties}
     >
       <head>
+        {settings?.google_analytics_id && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${settings.google_analytics_id}`}
+              strategy="afterInteractive"
+            />
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${settings.google_analytics_id}');
+              `}
+            </Script>
+          </>
+        )}
         {/* JSON-LD: Organization (appears on every page) */}
         <script
           type="application/ld+json"

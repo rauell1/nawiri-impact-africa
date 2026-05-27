@@ -14,6 +14,7 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import CareerDetailClient from "./CareerDetailClient";
+import JobApplicationForm from "../JobApplicationForm";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -211,25 +212,35 @@ export default async function CareerDetailPage({ params }: Props) {
               </section>
             )}
 
-            {/* ── Apply Now CTA ───────────────────────────────── */}
-            {mailto && (
-              <div className="pt-6 border-t border-[var(--border)]">
-                <a
-                  href={mailto}
-                  className="inline-flex items-center gap-3 px-8 py-4 text-base font-bold font-ui rounded-xl text-white shadow-nawiri-md hover:shadow-nawiri-lg transition-all bg-[var(--brand-primary)] hover:bg-[var(--brand-primary-light)]"
-                >
-                  <Mail className="w-5 h-5" />
-                  Apply Now
-                </a>
-                {career.application_email && (
-                  <p className="mt-3 text-sm text-[var(--brand-text-muted)] font-ui">
-                    Send your application to{" "}
-                    <span className="text-[var(--brand-text-secondary)] font-medium">
-                      {career.application_email}
+            {/* ── Apply Online Form ─────────────────────────────── */}
+            {career.application_email && (
+              <section className="mt-12 pt-10 border-t border-[var(--border)]">
+                <div className="bg-[var(--brand-surface-warm)] rounded-2xl p-6 md:p-8 border border-[var(--border)] shadow-nawiri-sm">
+                  <h2 className="flex items-center gap-2 mb-6">
+                    <span className="w-8 h-[2px] bg-[var(--brand-primary)] rounded-full" />
+                    <span className="text-overline text-[var(--brand-primary)]">
+                      Apply Online
                     </span>
-                  </p>
-                )}
-              </div>
+                  </h2>
+                  <JobApplicationForm
+                    jobTitle={career.job_title}
+                    department={career.department}
+                    apiEndpoint="/api/contact"
+                  />
+                  
+                  <div className="mt-8 pt-6 border-t border-[var(--border)]/60 text-center">
+                    <p className="text-sm text-[var(--brand-text-muted)] font-ui">
+                      Alternatively, you can submit your application via email by sending your resume and cover letter to{" "}
+                      <a
+                        href={`mailto:${career.application_email}?subject=Application%3A%20${encodeURIComponent(career.job_title)}`}
+                        className="font-bold text-[var(--brand-primary)] hover:underline"
+                      >
+                        {career.application_email}
+                      </a>
+                    </p>
+                  </div>
+                </div>
+              </section>
             )}
 
             {/* Salary range if available */}

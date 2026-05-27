@@ -4,6 +4,7 @@ import { db } from "@/lib/db";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import CareersListClient from "./CareersListClient";
+import JobApplicationForm from "./JobApplicationForm";
 
 export const metadata: Metadata = createMetadata({
   title: "Careers",
@@ -64,7 +65,7 @@ export default async function CareersPage() {
       <section className="section-padding gradient-section-warm" aria-label="Open positions">
         <div className="container-site">
           {careers.length === 0 ? (
-            <div className="text-center py-20">
+            <div className="max-w-2xl mx-auto text-center py-10">
               <div className="w-16 h-16 rounded-full bg-[var(--brand-primary-50)] flex items-center justify-center mx-auto mb-6">
                 <svg
                   className="w-8 h-8 text-[var(--brand-primary)]"
@@ -81,11 +82,21 @@ export default async function CareersPage() {
                 </svg>
               </div>
               <h3 className="mb-3">No Open Positions Right Now</h3>
-              <p className="text-prose text-[var(--brand-text-muted)] max-w-md mx-auto">
-                We don&apos;t have any open roles at the moment, but we&apos;re
-                always looking for talented people. Check back soon or follow us
-                on social media for updates.
+              <p className="text-prose text-[var(--brand-text-muted)] max-w-md mx-auto mb-10 font-body">
+                We don&apos;t have any open roles at the moment, but we are always looking for talented professionals. Submit your CV below to join our talent pool!
               </p>
+
+              {/* General Talent Pool CV Upload Form */}
+              <div className="bg-[var(--brand-surface-warm)] rounded-2xl p-6 md:p-8 border border-[var(--border)] shadow-nawiri-sm text-left">
+                <h3 className="font-heading text-lg font-bold text-[var(--brand-text-primary)] mb-6 text-center">
+                  Join Our General Talent Pool
+                </h3>
+                <JobApplicationForm
+                  jobTitle="General CV Submission"
+                  department="General Talent Pool"
+                  apiEndpoint="/api/contact"
+                />
+              </div>
             </div>
           ) : (
             <>
