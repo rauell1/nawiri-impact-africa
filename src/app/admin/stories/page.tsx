@@ -348,7 +348,7 @@ export default function AdminStoriesPage() {
                         <TableCell className="hidden sm:table-cell text-sm text-muted-foreground">
                           {s.published_date
                             ? new Date(s.published_date).toLocaleDateString()
-                            : "—"}
+                            : "-"}
                         </TableCell>
                         <TableCell className="text-right">
                           <div className="flex items-center justify-end gap-1">

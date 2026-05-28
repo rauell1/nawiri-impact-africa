@@ -7,6 +7,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { HandHeart, ArrowRight, ExternalLink } from "lucide-react";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = createMetadata({
   title: "Our Partners & Donors",
   description:

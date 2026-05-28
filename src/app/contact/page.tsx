@@ -8,6 +8,8 @@ import { Mail, Phone, MapPin } from "lucide-react";
 import ContactForm from "./ContactForm";
 import ContactHero from "./ContactHero";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = createMetadata({
   title: "Contact Us",
   description:

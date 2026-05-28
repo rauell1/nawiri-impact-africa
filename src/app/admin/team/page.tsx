@@ -294,12 +294,12 @@ export default function AdminTeamPage() {
                           <span className="font-medium">{member.name}</span>
                         </div>
                       </td>
-                      <td className="py-3 pr-4 text-muted-foreground hidden md:table-cell">{member.role || "—"}</td>
+                      <td className="py-3 pr-4 text-muted-foreground hidden md:table-cell">{member.role || "-"}</td>
                       <td className="py-3 pr-4 hidden sm:table-cell">
                         {member.is_leadership ? (
                           <Badge variant="outline" className="text-amber-600 border-amber-300 text-[11px]">Leadership</Badge>
                         ) : (
-                          <span className="text-muted-foreground">—</span>
+                          <span className="text-muted-foreground">-</span>
                         )}
                       </td>
                       <td className="py-3 pr-4 text-muted-foreground hidden lg:table-cell">{member.sort_order}</td>

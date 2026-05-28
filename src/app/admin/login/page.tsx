@@ -106,7 +106,7 @@ export default function AdminLoginPage() {
 
           <div className="mt-6 pt-4 border-t text-center">
             <p className="text-xs text-muted-foreground">
-              Nawiri Impact Africa — Content Management System
+              Nawiri Impact Africa | Content Management System
             </p>
           </div>
         </CardContent>

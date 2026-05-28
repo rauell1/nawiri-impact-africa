@@ -3,6 +3,7 @@ import { Playfair_Display, Source_Serif_4, DM_Sans } from "next/font/google";
 import { Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
+import CookieBanner from "@/components/ui/CookieBanner";
 import { db } from "@/lib/db";
 import Script from "next/script";
 
@@ -130,7 +131,7 @@ export default async function RootLayout({
 
   return (
     <html 
-      lang="en" 
+      lang="en-KE"
       suppressHydrationWarning
       style={{
         "--brand-primary": primaryColor,
@@ -210,6 +211,9 @@ export default async function RootLayout({
         </a>
         {children}
         <Toaster />
+        {settings?.cookie_banner_text && (
+          <CookieBanner text={settings.cookie_banner_text} />
+        )}
       </body>
     </html>
   );

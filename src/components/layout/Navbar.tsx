@@ -60,8 +60,10 @@ export default function Navbar({ settings }: NavbarProps) {
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [isOpen]);
 
-  // Primary nav links (first 6 + donate)
-  const mainLinks = navLinks.slice(0, 7);
+  // All nav links except Donate (shown separately as CTA button)
+  const mainLinks = navLinks.filter(
+    (l) => !l.label.toLowerCase().includes("donate")
+  );
   const donateLink = navLinks.find((l) =>
     l.label.toLowerCase().includes("donate")
   );
@@ -93,7 +95,7 @@ export default function Navbar({ settings }: NavbarProps) {
           <Link
             href="/"
             className="flex items-center gap-2 shrink-0 z-10"
-            aria-label={`${settings.site_name} — Home`}
+            aria-label={`${settings.site_name} - Home`}
           >
             <Image
               src={settings.logo_url}

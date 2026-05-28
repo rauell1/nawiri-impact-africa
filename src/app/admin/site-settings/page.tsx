@@ -308,7 +308,7 @@ export default function SiteSettingsPage() {
                     placeholder="Playfair Display"
                   />
                   <p className="text-xs text-muted-foreground">
-                    Font family used for headings (h1–h6)
+                    Font family used for headings (h1 to h6)
                   </p>
                 </div>
                 <div className="space-y-2">

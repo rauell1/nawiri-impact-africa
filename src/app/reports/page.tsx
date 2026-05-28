@@ -7,6 +7,8 @@ import Image from "next/image";
 import { FileText, Download, Calendar, Filter } from "lucide-react";
 import ReportsClient from "./ReportsClient";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = createMetadata({
   title: "Reports & Financials",
   description:
