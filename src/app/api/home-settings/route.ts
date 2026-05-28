@@ -32,7 +32,7 @@ export async function GET() {
     }
 
     // Fetch the related featured story manually (no explicit Prisma relation)
-    let featuredStory = null;
+    let featuredStory: any = null;
     if (settings.featured_story_id) {
       featuredStory = await db.story.findUnique({
         where: { id: settings.featured_story_id },

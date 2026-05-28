@@ -106,7 +106,7 @@ export default async function BlogPostPage({ params }: Props) {
             <BlogDetailClient
               category={post.category}
               date={formatDate(post.published_date)}
-              authorName={post.author_name}
+              authorName={post.author_name || undefined}
             />
 
             {/* Title */}

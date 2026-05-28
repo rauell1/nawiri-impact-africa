@@ -25,8 +25,37 @@ async function getPageData() {
     footerLinks = [];
   }
 
+  const site = siteSettings
+    ? {
+        id: siteSettings.id,
+        site_name: siteSettings.site_name,
+        site_tagline: siteSettings.site_tagline,
+        logo_url: siteSettings.logo_url,
+        logo_dark_url: siteSettings.logo_dark_url || undefined,
+        favicon_url: siteSettings.favicon_url,
+        primary_color: siteSettings.primary_color,
+        secondary_color: siteSettings.secondary_color,
+        font_heading: siteSettings.font_heading,
+        font_body: siteSettings.font_body,
+        contact_email: siteSettings.contact_email,
+        contact_phone: siteSettings.contact_phone,
+        physical_address: siteSettings.physical_address,
+        social_twitter: siteSettings.social_twitter || undefined,
+        social_linkedin: siteSettings.social_linkedin || undefined,
+        social_facebook: siteSettings.social_facebook || undefined,
+        social_youtube: siteSettings.social_youtube || undefined,
+        footer_description: siteSettings.footer_description,
+        footer_links: footerLinks,
+        cookie_banner_text: siteSettings.cookie_banner_text,
+        maintenance_mode: siteSettings.maintenance_mode,
+        google_analytics_id: siteSettings.google_analytics_id || undefined,
+        createdAt: siteSettings.createdAt,
+        updatedAt: siteSettings.updatedAt,
+      }
+    : null;
+
   return {
-    site: { ...siteSettings, footer_links: footerLinks },
+    site,
   };
 }
 

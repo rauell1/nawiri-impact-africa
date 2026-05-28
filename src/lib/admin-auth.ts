@@ -7,9 +7,9 @@ export function validatePassword(password: string): boolean {
   return password === ADMIN_PASSWORD;
 }
 
-// Convert string to Uint8Array UTF-8 bytes
-function textEncode(str: string): Uint8Array {
-  return new TextEncoder().encode(str);
+// Convert string to UTF-8 bytes represented as BufferSource
+function textEncode(str: string): BufferSource {
+  return new TextEncoder().encode(str) as unknown as BufferSource;
 }
 
 // Convert ArrayBuffer to hex string

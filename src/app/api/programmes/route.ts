@@ -74,7 +74,7 @@ export async function POST(request: NextRequest) {
     }
 
     const programme = await db.programme.create({
-      data,
+      data: data as any,
     });
 
     // Return with parsed JSON fields

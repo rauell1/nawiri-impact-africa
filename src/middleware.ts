@@ -7,7 +7,11 @@ import { validateSession, getSessionCookieName } from "@/lib/admin-auth";
  * This still works correctly; it will be migrated to proxy.ts when the API stabilizes.
  */
 export async function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;
+  const { pathname, search } = request.nextUrl;
+
+  // Log all matched incoming requests with a timestamp
+  const timestamp = new Date().toISOString();
+  console.log(`[${timestamp}] [REQUEST] ${request.method} ${pathname}${search}`);
 
   // Skip non-admin routes
   if (!pathname.startsWith("/admin")) {
@@ -35,5 +39,14 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/admin/:path*"],
+  matcher: [
+    /*
+     * Match all request paths except for the ones starting with:
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     * - common static files (svg, png, jpg, jpeg, gif, webp, pdf, txt, css, js)
+     */
+    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|pdf|json|txt|xml|css|js)).*)",
+  ],
 };

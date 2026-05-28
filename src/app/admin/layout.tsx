@@ -105,7 +105,7 @@ export default function AdminLayout({
           </div>
         </SidebarInset>
       </SidebarProvider>
-      <Toaster position="top-right" richColors />
+      <Toaster />
     </AdminAuthContext.Provider>
   );
 }

@@ -33,7 +33,7 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://nawiriimpactafrica
 const SITE_NAME = "Nawiri Impact Africa";
 
 export async function generateMetadata(): Promise<Metadata> {
-  let settings = null;
+  let settings: any = null;
   try {
     settings = await db.siteSettings.findUnique({ where: { id: "main" } });
   } catch (error) {
@@ -118,7 +118,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  let settings = null;
+  let settings: any = null;
   try {
     settings = await db.siteSettings.findUnique({ where: { id: "main" } });
   } catch (error) {

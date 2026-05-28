@@ -86,8 +86,19 @@ async function getCmsData() {
         ? programmes.filter((p) => featuredProgrammeSlugs.includes(p.slug))
         : programmes.slice(0, 4);
 
+    const mappedProgrammes = featuredProgrammes.map((p) => ({
+      ...p,
+      color_accent: p.color_accent || undefined,
+      impact_stat_1_number: p.impact_stat_1_number || undefined,
+      impact_stat_1_label: p.impact_stat_1_label || undefined,
+      impact_stat_2_number: p.impact_stat_2_number || undefined,
+      impact_stat_2_label: p.impact_stat_2_label || undefined,
+      impact_stat_3_number: p.impact_stat_3_number || undefined,
+      impact_stat_3_label: p.impact_stat_3_label || undefined,
+    }));
+
     // Fetch featured story if set
-    let featuredStory = null;
+    let featuredStory: any = null;
     if (homeSettings?.featured_story_id) {
       const story = await db.story.findUnique({
         where: { id: homeSettings.featured_story_id },
@@ -95,13 +106,18 @@ async function getCmsData() {
 
       if (story && story.status === "published") {
         // Look up the associated programme by slug (programme_id stores the slug)
-        let programme = null;
+        let programme: any = null;
         if (story.programme_id) {
           programme = programmes.find((p) => p.slug === story.programme_id) || null;
         }
 
         featuredStory = {
           ...story,
+          author_role: story.author_role || undefined,
+          author_photo: story.author_photo || undefined,
+          location: story.location || undefined,
+          programme_id: story.programme_id || undefined,
+          pull_quote: story.pull_quote || undefined,
           programme: programme
             ? { title: programme.title, slug: programme.slug }
             : null,
@@ -109,19 +125,84 @@ async function getCmsData() {
       }
     }
 
+    const mappedBlogPosts = blogPosts.map((post) => ({
+      ...post,
+      excerpt: post.excerpt || undefined,
+      author_name: post.author_name || undefined,
+    }));
+
+    const mappedFeaturedPartners = featuredPartners.map((partner) => ({
+      ...partner,
+      website_url: partner.website_url || undefined,
+      description: partner.description || undefined,
+    }));
+
+    const site = siteSettings
+      ? {
+          id: siteSettings.id,
+          site_name: siteSettings.site_name,
+          site_tagline: siteSettings.site_tagline,
+          logo_url: siteSettings.logo_url,
+          logo_dark_url: siteSettings.logo_dark_url || undefined,
+          favicon_url: siteSettings.favicon_url,
+          primary_color: siteSettings.primary_color,
+          secondary_color: siteSettings.secondary_color,
+          font_heading: siteSettings.font_heading,
+          font_body: siteSettings.font_body,
+          contact_email: siteSettings.contact_email,
+          contact_phone: siteSettings.contact_phone,
+          physical_address: siteSettings.physical_address,
+          social_twitter: siteSettings.social_twitter || undefined,
+          social_linkedin: siteSettings.social_linkedin || undefined,
+          social_facebook: siteSettings.social_facebook || undefined,
+          social_youtube: siteSettings.social_youtube || undefined,
+          footer_description: siteSettings.footer_description,
+          footer_links: footerLinks,
+          cookie_banner_text: siteSettings.cookie_banner_text,
+          maintenance_mode: siteSettings.maintenance_mode,
+          google_analytics_id: siteSettings.google_analytics_id || undefined,
+          createdAt: siteSettings.createdAt,
+          updatedAt: siteSettings.updatedAt,
+        }
+      : null;
+
+    const home = homeSettings
+      ? {
+          id: homeSettings.id,
+          hero_headline: homeSettings.hero_headline,
+          hero_subheadline: homeSettings.hero_subheadline,
+          hero_cta_primary_label: homeSettings.hero_cta_primary_label,
+          hero_cta_primary_url: homeSettings.hero_cta_primary_url,
+          hero_cta_secondary_label: homeSettings.hero_cta_secondary_label || undefined,
+          hero_cta_secondary_url: homeSettings.hero_cta_secondary_url || undefined,
+          hero_background_image: homeSettings.hero_background_image,
+          hero_background_video_url: homeSettings.hero_background_video_url || undefined,
+          hero_overlay_opacity: homeSettings.hero_overlay_opacity,
+          hero_text_alignment: homeSettings.hero_text_alignment,
+          stats,
+          stats_bar_bg_color: homeSettings.stats_bar_bg_color,
+          featured_story_id: homeSettings.featured_story_id || undefined,
+          home_programmes_heading: homeSettings.home_programmes_heading,
+          home_programmes_subtext: homeSettings.home_programmes_subtext || undefined,
+          home_featured_programmes: homeSettings.home_featured_programmes,
+          home_cta_heading: homeSettings.home_cta_heading,
+          home_cta_body: homeSettings.home_cta_body || undefined,
+          home_cta_button_label: homeSettings.home_cta_button_label,
+          home_cta_button_url: homeSettings.home_cta_button_url,
+          home_cta_background: homeSettings.home_cta_background,
+          home_cta_image: homeSettings.home_cta_image || undefined,
+          createdAt: homeSettings.createdAt,
+          updatedAt: homeSettings.updatedAt,
+        }
+      : null;
+
     return {
-      site: {
-        ...siteSettings,
-        footer_links: footerLinks,
-      },
-      home: {
-        ...homeSettings,
-        stats,
-      },
-      programmes: featuredProgrammes,
+      site,
+      home,
+      programmes: mappedProgrammes,
       featuredStory,
-      blogPosts,
-      featuredPartners,
+      blogPosts: mappedBlogPosts,
+      featuredPartners: mappedFeaturedPartners,
     };
   } catch (error) {
     console.error("CMS fetch error:", error);
